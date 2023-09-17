@@ -143,7 +143,7 @@ class server extends CI_Controller
         }
 
         if ($error == 0) {
-            $this->model->MOD_ADD_USERACCOUNT($rfid_number, $name, $username, password_hash($password, PASSWORD_ARGON2I), "student");
+            $this->model->MOD_ADD_USERACCOUNT($rfid_number, $name, $username, password_hash($password, PASSWORD_BCRYPT), "student");
 
             $username_exists = $this->model->MOD_CHECK_USERNAME($username);
 
@@ -202,7 +202,7 @@ class server extends CI_Controller
 
         if ($error == 0) {
             if ($password) {
-                $password = password_hash($password, PASSWORD_ARGON2I);
+                $password = password_hash($password, PASSWORD_BCRYPT);
             } else {
                 $password = $old_password;
             }
@@ -406,7 +406,7 @@ class server extends CI_Controller
         }
 
         if ($error == 0) {
-            $this->model->MOD_ADD_USERACCOUNT($rfid_number, $name, $username, password_hash($password, PASSWORD_ARGON2I), "admin");
+            $this->model->MOD_ADD_USERACCOUNT($rfid_number, $name, $username, password_hash($password, PASSWORD_BCRYPT), "admin");
 
             $this->session->set_userdata("alert", array(
                 "title" => "Success!",
@@ -455,7 +455,7 @@ class server extends CI_Controller
 
         if ($error == 0) {
             if ($password) {
-                $password = password_hash($password, PASSWORD_ARGON2I);
+                $password = password_hash($password, PASSWORD_BCRYPT);
             } else {
                 $password = $old_password;
             }
