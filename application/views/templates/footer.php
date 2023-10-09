@@ -864,7 +864,7 @@
             <form action="server/set_status" method="post" id="set_status_form">
                 <div class="modal-body">
                     <div class="form-group mb-3">
-                        <label class="col-form-label" for="set_status_status">Category</label>
+                        <label class="col-form-label" for="set_status_status">Status</label>
                         <select class="custom-select" name="set_status_status" id="set_status_status" required>
                             <option value="" disabled selected>-- Select Status --</option>
                             <option value="Approved">Approve Application</option>
