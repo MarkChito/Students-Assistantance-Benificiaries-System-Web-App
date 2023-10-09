@@ -797,6 +797,7 @@ class server extends CI_Controller
         $admin_name = $this->input->post("set_status_admin_name");
 
         $notification_status = "unread";
+        $event = "";
 
         $this->model->MOD_ADD_NOTIFICATION($student_id, $admin_id, $date_now, $time_now, $message, $notification_status);
 
@@ -831,20 +832,16 @@ class server extends CI_Controller
                 $this->model->MOD_UPDATE_SLOT_CATEGORY($available_slots, $plain_category);
 
                 $event = "Application has been approved by Admin " . $admin_name . ".";
-
-                $this->model->MOD_ADD_TRANSACTION($student_id, $date_now, $time_now, $event);
             } else {
                 $event = "Application has been rejected by Admin " . $admin_name . ".";
-
-                $this->model->MOD_ADD_TRANSACTION($student_id, $date_now, $time_now, $event);
             }
         } else {
             $this->model->MOD_UPDATE_APPLICATION($date_now, $time_now, $status, "None", $student_id);
 
             $event = "Admin " . $admin_name . " has reverted this application back to " . $status . " for further review of certain details.";
-
-            $this->model->MOD_ADD_TRANSACTION($student_id, $date_now, $time_now, $event);
         }
+
+        $this->model->MOD_ADD_TRANSACTION($student_id, $date_now, $time_now, $event);
 
         $this->session->set_userdata("alert", array(
             "title" => "Success!",
