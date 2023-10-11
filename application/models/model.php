@@ -307,7 +307,7 @@ class model extends CI_Model
      
     public function MOD_UPDATE_APPLICATION_STATUS($primary_key)
     {
-        $sql = "UPDATE `tbl_studentassistance_applications` SET `status`='Received' WHERE `student_primary_key`=?";
+        $sql = "UPDATE `tbl_studentassistance_applications` SET `status`='Received' WHERE `primary_key`=?";
 
         $this->db->query($sql, array($primary_key));
     }

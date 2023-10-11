@@ -296,11 +296,10 @@ class server extends CI_Controller
             foreach ($applications as $application_data) {
                 $db_application_id = md5($application_data->primary_key);
 
-                if ($db_application_id == $application_id)
-                {
+                if ($db_application_id == $application_id) {
                     $student_primary_key = $application_data->student_primary_key;
                     $status = $application_data->status;
-    
+
                     if ($status != "Approved") {
                         if ($status == "Received") {
                             $response = array(
@@ -316,16 +315,14 @@ class server extends CI_Controller
                     } else {
                         $student_data = $this->model->MOD_GET_STUDENT_DATA($student_primary_key);
                         $login_data = $this->model->MOD_GET_USERACCOUNT_DATA($student_primary_key);
-    
+
                         $response = array(
                             "status" => "OK",
                             "content" => $student_data,
                             "rfid_number" => $login_data[0]->rfid_number
                         );
                     }
-                }
-
-                else {
+                } else {
                     $response = array(
                         "status" => "NOT OK",
                         "content" => "This Application ID doesn't exists"
@@ -340,7 +337,7 @@ class server extends CI_Controller
     public function update_application_status()
     {
         $primary_key = $this->input->post("primary_key");
-        
+
         $this->model->MOD_UPDATE_APPLICATION_STATUS($primary_key);
 
         $this->session->set_userdata("alert", array(

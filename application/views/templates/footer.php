@@ -1066,7 +1066,7 @@
                                 $("#scan_qr_code_mother_name").text(record.mother_name);
                                 $("#scan_qr_code_mother_occupation").text(record.mother_occupation);
 
-                                $("#btn_release_money").attr("primary_key", record.login_primary_key);
+                                $("#btn_release_money").attr("primary_key", record.primary_key);
 
                                 $("#scan_qr_code_user_image").removeAttr("href");
                                 $("#scan_qr_code_user_image").removeAttr("download");
