@@ -486,6 +486,24 @@ class server extends CI_Controller
         redirect(base_url() . $current_tab);
     }
 
+    public function delete_student()
+    {
+        $primary_key = $this->input->get("primary_key");
+
+        $current_tab = $this->session->userdata("current_tab");
+
+        $this->model->MOD_DELETE_STUDENT($primary_key);
+        $this->model->MOD_DELETE_STUDENT_ACCOUNT($primary_key);
+
+        $this->session->set_userdata("alert", array(
+            "title" => "Success!",
+            "message" => "Successfully deleted an student account",
+            "type" => "success"
+        ));
+
+        redirect(base_url() . $current_tab);
+    }
+
     public function add_procedure()
     {
         $category = $this->input->post("add_procedure_category");
@@ -614,6 +632,9 @@ class server extends CI_Controller
 
     public function accept_terms_and_conditions()
     {
+        $date_now = date("F d, Y");
+        $time_now = date("h:i A");
+
         $category = $this->input->post("assistance_type");
         $student_primary_key = $this->input->post("accept_user_id");
         $progress = "Step 1";
@@ -621,10 +642,14 @@ class server extends CI_Controller
 
         $current_tab = $this->session->userdata("current_tab");
 
-        $this->model->MOD_ADD_APPLICATION($student_primary_key, $category, $progress, $status);
+        $result_application = $this->model->MOD_APPLICATION_DATA($student_primary_key);
 
-        $date_now = date("F d, Y");
-        $time_now = date("h:i A");
+        if ($result_application) {
+            $this->model->MOD_UPDATE_APPLICATION($date_now, $time_now, $progress, $status, $student_primary_key);
+        } else {
+            $this->model->MOD_ADD_APPLICATION($student_primary_key, $category, $progress, $status);
+        }
+
         $event = "Applied for " . $category . " Assistance. Accepted Terms and Conditions. Proceeding to Step 1.";
 
         $this->model->MOD_ADD_TRANSACTION($student_primary_key, $date_now, $time_now, $event);
@@ -847,6 +872,49 @@ class server extends CI_Controller
         ));
 
         redirect("pending?category=" . $category);
+    }
+
+    public function reset_status()
+    {
+        $date_now = date("F d, Y");
+        $time_now = date("h:i A");
+
+        $student_id = $this->input->post("reset_status_student_id");
+        $admin_id = $this->input->post("reset_status_admin_id");
+        $status = "Step 0";
+        $message = $this->input->post("reset_status_message");
+
+        $category = $this->input->post("reset_status_category");
+        $admin_name = $this->input->post("reset_status_admin_name");
+
+        $notification_status = "unread";
+        $event = "";
+
+        $this->model->MOD_ADD_NOTIFICATION($student_id, $admin_id, $date_now, $time_now, $message, $notification_status);
+
+        $result_notification_badge = $this->model->MOD_GET_NOTIFICATION_BADGE($student_id);
+
+        if ($result_notification_badge) {
+            $this->model->MOD_UPDATE_NOTIFICATION_BADGE("unclicked", $student_id);
+        } else {
+            $this->model->MOD_ADD_NOTIFICATION_BADGE("unclicked", $student_id);
+        }
+
+        $this->model->MOD_UPDATE_APPLICATION($date_now, $time_now, $status, "None", $student_id);
+
+        $event = "Admin " . $admin_name . " has reset this application.";
+
+        $this->model->MOD_ADD_TRANSACTION($student_id, $date_now, $time_now, $event);
+
+        $current_tab = $this->session->userdata("current_tab");
+
+        $this->session->set_userdata("alert", array(
+            "title" => "Success!",
+            "message" => "Student's status is updated",
+            "type" => "success"
+        ));
+
+        redirect(base_url() . $current_tab);
     }
 
     public function update_notification_status()

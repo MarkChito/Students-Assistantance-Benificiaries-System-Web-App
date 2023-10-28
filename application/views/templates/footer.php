@@ -892,6 +892,36 @@
     </div>
 </div>
 
+<!-- Edit Student Status Modal-->
+<div class="modal fade" id="edit_student_status" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark" id="exampleModalLongTitle">Reset Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="server/reset_status" method="post" id="reset_status_form">
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        <label class="col-form-label" for="reset_status_message">Massage</label>
+                        <textarea class="form-control" name="reset_status_message" id="reset_status_message" placeholder="Enter Message" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="reset_status_student_id" name="reset_status_student_id">
+                    <input type="hidden" id="reset_status_admin_name" name="reset_status_admin_name" value="<?= $this->session->userdata("name") ?>">
+                    <input type="hidden" id="reset_status_admin_id" name="reset_status_admin_id" value="<?= $this->session->userdata("primary_key") ?>">
+
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="btn_reset_status">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <!-- Scan QR COde Modal -->
 <div class="modal fade" id="scan_qr_code">
     <div class="modal-dialog modal-dialog-centered">
@@ -1168,6 +1198,11 @@
             $("#btn_set_status").attr("disabled", true);
         })
 
+        $("#reset_status_form").submit(function(e) {
+            $("#btn_reset_status").html("Processing Request...");
+            $("#btn_reset_status").attr("disabled", true);
+        })
+
         $(".btn_logout").click(function() {
             location.href = "server/logout";
         })
@@ -1220,6 +1255,12 @@
             $("#edit_admin_old_password").val(password);
         })
 
+        $(".edit_student_status").click(function() {
+            var login_primary_key = $(this).attr("login_primary_key");
+
+            $("#reset_status_student_id").val(login_primary_key);
+        })
+
         $(".delete_admin").click(function() {
             var primary_key = $(this).attr("primary_key");
 
@@ -1234,6 +1275,24 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     location.href = "server/delete_admin?primary_key=" + primary_key;
+                }
+            })
+        })
+
+        $(".delete_student").click(function() {
+            var primary_key = $(this).attr("primary_key");
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You are going to DELETE this data!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.href = "server/delete_student?primary_key=" + primary_key;
                 }
             })
         })
@@ -2016,9 +2075,12 @@
             $(this).find('h3, p').removeClass('text-bold');
             $(this).find('h3, p').addClass('text-muted');
 
-            $(".notifications_tr").removeClass('text-bold');
-
             update_notification_status("server/update_notification_status", primary_key);
+        })
+
+        $('#my_table').on('click', '.notifications', function() {
+            // Find the parent row and remove the "text-bold" class
+            $(this).closest('tr.notifications_tr').removeClass('text-bold');
         })
 
         $("#notification_menu").click(function() {

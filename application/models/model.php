@@ -198,6 +198,14 @@ class model extends CI_Model
         }
     }
 
+    public function MOD_GET_STUDENTS_DATA()
+    {
+        $sql = "SELECT * FROM `tbl_studentassistance_students` ORDER BY `primary_key` DESC";
+        $query = $this->db->query($sql);
+
+        return $query->result();
+    }
+
     /*============================== INSERT QUERIES ==============================*/
     public function MOD_ADD_USERACCOUNT($rfid_number, $name, $username, $password, $user_type)
     {
@@ -444,5 +452,17 @@ class model extends CI_Model
         $sql = "DELETE FROM `tbl_studentassistance_slots` WHERE `category`=?";
 
         $this->db->query($sql, array($category));
+    }
+
+    public function MOD_DELETE_STUDENT($primary_key)
+    {
+        $sql = "DELETE FROM `tbl_studentassistance_useraccounts` WHERE `primary_key`=?";
+        $this->db->query($sql, array($primary_key));      
+    }
+    
+    public function MOD_DELETE_STUDENT_ACCOUNT($primary_key)
+    {
+        $sql = "DELETE FROM `tbl_studentassistance_useraccounts` WHERE `primary_key`=?";
+        $this->db->query($sql, array($primary_key));
     }
 }

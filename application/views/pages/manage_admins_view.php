@@ -25,7 +25,7 @@
                                         <td class="text-muted">***************</td>
                                         <td class="text-center">
                                             <i class="fas fa-pencil-alt text-primary mr-2 edit_admin" style="cursor: pointer;" primary_key="<?= $admins->primary_key ?>" name="<?= $admins->name ?>" rfid_number="<?= $admins->rfid_number ?>" username="<?= $admins->username ?>" password="<?= $admins->password ?>" data-toggle="modal" data-target="#edit_admin"></i>
-                                            <i class="fas fa-trash-alt text-danger delete_admin" style="cursor: pointer;" primary_key="<?= $admins->primary_key ?>"></i>
+                                            <!-- <i class="fas fa-trash-alt text-danger delete_admin" style="cursor: pointer;" primary_key="<?= $admins->primary_key ?>"></i> -->
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
