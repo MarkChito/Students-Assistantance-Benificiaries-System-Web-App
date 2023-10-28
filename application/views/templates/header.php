@@ -104,7 +104,7 @@ $result_notification_badge = $this->model->MOD_GET_NOTIFICATION_BADGE($this->ses
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Meta tags for SEO and social media sharing -->
-    <meta name="description" content="Student Assistance Beneficiaries' System - Providing support and aid to students in need.">
+    <meta name="description" content="Student Assistance Beneficiaries System - Providing support and aid to students in need.">
     <meta name="keywords" content="student assistance, beneficiaries, support, education, financial aid">
     <meta name="author" content="Colegio de Montalban">
     <meta name="robots" content="index, follow">
@@ -266,6 +266,14 @@ $result_notification_badge = $this->model->MOD_GET_NOTIFICATION_BADGE($this->ses
                                     <a href="manage_admins" class="nav-link <?= $this->session->userdata("current_tab") == "manage_admins" ? "active" : null ?>">
                                         <i class="nav-icon fas fa-users"></i>
                                         <p>Administrators</p>
+                                        <div class="spinner-border spinner-border-sm text-success float-right d-none tab_spinner" role="status"></div>
+                                    </a>
+                                </li>
+                                <!-- Manage Students Tab -->
+                                <li class="nav-item">
+                                    <a href="manage_students" class="nav-link <?= $this->session->userdata("current_tab") == "manage_students" ? "active" : null ?>">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>Students</p>
                                         <div class="spinner-border spinner-border-sm text-success float-right d-none tab_spinner" role="status"></div>
                                     </a>
                                 </li>

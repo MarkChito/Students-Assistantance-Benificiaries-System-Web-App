@@ -344,7 +344,7 @@
                                             <input type="hidden" id="step_1_primary_key" name="step_1_primary_key" value="<?= $this->session->userdata("primary_key") ?>">
                                             <input type="hidden" id="step_1_old_student_number" name="step_1_old_student_number" value="<?= $this->session->userdata("student_number") ?>">
                                             <input type="hidden" id="step_1_old_rfid_number" name="step_1_old_rfid_number" value="<?= $this->session->userdata("rfid_number") ?>">
-                                            
+
                                             <button class="btn btn-primary float-right" type="submit" id="btn_step_1">Proceed to Step 2&nbsp;&nbsp;<i class="fas fa-arrow-right"></i></button>
                                         </div>
                                     </form>
@@ -762,6 +762,22 @@
                                     <li>Review the rejection notice carefully to understand the reasons for the rejection.</li>
                                     <li>Consider reaching out to our student support team for further clarification or guidance.</li>
                                     <li>Explore alternative options or funding opportunities to support your educational needs.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                <?php else : ?>
+                    <div class="container-fluid">
+                        <div class="card bg-primary">
+                            <div class="card-body">
+                                <h1><?= $category ?> Assistance Application Completed</h1>
+                                <p>Your assistance money has been released.</p>
+                                <hr>
+                                <p>Please take note of the following:</p>
+                                <ul>
+                                    <li>Confirm the receipt of the released funds in your designated account.</li>
+                                    <li>Keep records of the transaction for your financial records.</li>
+                                    <li>Reach out to our student support team for any questions or concerns related to the released assistance.</li>
                                 </ul>
                             </div>
                         </div>

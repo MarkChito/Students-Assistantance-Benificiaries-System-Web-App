@@ -988,8 +988,7 @@
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                    if (response == "OK")
-                    {
+                    if (response == "OK") {
                         location.href = base_url + "scan_qr_code";
                     }
                 },
@@ -1178,15 +1177,16 @@
         })
 
         $("#btn_pushmenu").click(function() {
+            if (!isMobileDevice()) {
+                if (is_opened) {
+                    is_opened = false;
 
-            if (is_opened) {
-                is_opened = false;
+                    $("#favicon").attr("style", "height: auto; width: 50px !important; padding-top: 10px");
+                } else {
+                    is_opened = true;
 
-                $("#favicon").attr("style", "height: auto; width: 50px !important; padding-top: 10px");
-            } else {
-                is_opened = true;
-
-                $("#favicon").attr("style", "height: auto; width: 200px !important; padding-top: 10px");
+                    $("#favicon").attr("style", "height: auto; width: 200px !important; padding-top: 10px");
+                }
             }
         })
 
@@ -2040,6 +2040,10 @@
             link.download = number + "_qrcode.png";
             link.click();
         })
+
+        function isMobileDevice() {
+            return /Mobi|Android|iPhone|iPad|iPod|Windows Phone|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
 
         function generateQRCode(application_id, progress, status) {
             if (application_id && progress == "Completed" && status == "Approved") {

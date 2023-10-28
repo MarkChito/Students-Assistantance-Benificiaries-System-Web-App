@@ -24,9 +24,10 @@ class api extends CI_Controller
         if ($username_exists) {
             foreach ($username_exists as $result) {
                 $db_password = $result->password;
+                $db_user_type = $result->user_type;
             }
 
-            if (password_verify($password, $db_password)) {
+            if (password_verify($password, $db_password) && $db_user_type == "student") {
                 $response = array(
                     "response_code" => 200,
                     "response_content" => json_encode($username_exists)
